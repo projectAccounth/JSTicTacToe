@@ -1,4 +1,4 @@
-const { TicTacToe } = require("../src/tictactoe.ts");
+const { TicTacToe } = require("@not_thefirst/jstictactoe");
 
 let game = new TicTacToe({boardSize: 5, matchLength: 5});
 

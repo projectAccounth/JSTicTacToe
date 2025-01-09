@@ -6,6 +6,7 @@ exports.MIN_BOARD_SIZE = 3;
 function fillBoard(boardSize, symbol) {
     var output = new Array(boardSize);
     for (var i = 0; i < boardSize; i++) {
+        output[i] = new Array(boardSize);
         for (var j = 0; j < boardSize; j++) {
             output[i][j] = symbol;
         }
@@ -137,9 +138,23 @@ var TicTacToe = /** @class */ (function () {
     TicTacToe.prototype.isGameOver = function () {
         return this._checkDraw() || this._checkMatch(this._turn);
     };
+    TicTacToe.prototype.isDraw = function () {
+        return this._checkDraw();
+    };
+    TicTacToe.prototype.winner = function () {
+        if (this._checkMatch('X'))
+            return "X";
+        if (this._checkMatch('O'))
+            return "O";
+        return undefined;
+    };
     TicTacToe.prototype.move = function (_a) {
         var x = _a.x, y = _a.y;
-        this._makeMove({ x: x, y: y });
+        var opponent = this._turn == 'X' ? 'O' : 'X';
+        if (!this._checkMatch(opponent))
+            this._makeMove({ x: x, y: y });
+        else
+            throw new Error("Invalid move");
     };
     TicTacToe.prototype.turn = function () {
         return this._turn;

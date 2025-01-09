@@ -5,6 +5,7 @@ export type Side = 'X' | 'O';
 export function fillBoard(boardSize: number, symbol: number): number[][] {
     let output: number[][] = new Array(boardSize);
     for (let i = 0; i < boardSize; i++) {
+        output[i] = new Array(boardSize);
         for (let j = 0; j < boardSize; j++) {
             output[i][j] = symbol;
         }
@@ -152,8 +153,22 @@ export class TicTacToe {
         return this._checkDraw() || this._checkMatch(this._turn);
     }
 
+    isDraw() {
+        return this._checkDraw();
+    }
+    
+    winner(): string | undefined {
+        if (this._checkMatch('X' as Side)) return "X";
+        if (this._checkMatch('O' as Side)) return "O";
+        return undefined;
+    }
+
     move({x, y}: {x: number, y: number}) {
-        this._makeMove({x: x, y: y});
+        let opponent: Side = this._turn == 'X' ? 'O' : 'X';
+        if (!this._checkMatch(opponent))
+            this._makeMove({x: x, y: y});
+        else
+            throw new Error("Invalid move");
     }
 
     turn() {
