@@ -94,11 +94,13 @@ export class TicTacToe {
     };
 
     private _makeMove({x, y}: {x: number, y: number}) {
+        if (this._board[y][x] !== 0) return;
         this._board[y][x] = this._turn == 'X' ? this._xSymbol : this._oSymbol;
         this._turn = this._turn == 'X' ? 'O' : 'X';
     }
 
     private _undoMove({x, y}: {x: number, y: number}) {
+        if (this._board[y][x] !== 0) return;
         this._board[y][x] = 0;
         this._turn = this._turn == 'X' ? 'O' : 'X';
     }
